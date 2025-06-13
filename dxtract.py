@@ -11,12 +11,9 @@ dxtract.py
 """
 
 from __future__ import annotations
-
 from typing import Any, Dict, List
 import pandas as pd
 
-# ✅ Debug print to confirm we're using the updated file
-print("✅ Running UPDATED dxtract.py")
 
 def transform(dxtract_data: List[Dict[str, Any]], params: Dict[str, Any]) -> List[Dict[str, Any]]:
     """
@@ -37,19 +34,16 @@ def transform(dxtract_data: List[Dict[str, Any]], params: Dict[str, Any]) -> Lis
     ValueError
         If any cell in DXtract is not numeric.
     """
-    # Build DataFrame
     df = pd.DataFrame(dxtract_data)
 
     # Try coercing all values to numeric – invalid cells become NaN
     df_numeric = df.apply(pd.to_numeric, errors="coerce")
 
-    # If any NaN exists, we have non-numeric data
     if df_numeric.isna().any().any():
         raise ValueError("DXtract must be numeric")
 
-    # Placeholder transformation: Multiply all numeric values by 2
     df_out = df_numeric * 2
 
-    # Return list-of-dicts (Power Query can unpack this as a table)
     return df_out.to_dict(orient="records")
+
 
