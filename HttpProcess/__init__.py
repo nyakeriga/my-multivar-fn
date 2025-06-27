@@ -3,7 +3,7 @@ import logging
 from typing import Any, Dict, List
 
 import azure.functions as func
-from .dxtract import transform  # Corrected import — use relative path
+from .dxtract import transform  # Correct relative import
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     logging.info("HttpProcess received a request")
@@ -40,9 +40,8 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             mimetype="application/json",
         )
 
-    # 3️⃣ Return table (list of dicts) as JSON
+    # 3️⃣ Return transformed result
     logging.info("Returning transformed table with %d rows", len(result_table))
-
     return func.HttpResponse(
         body=json.dumps(result_table, default=str),
         status_code=200,
